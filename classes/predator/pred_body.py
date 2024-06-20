@@ -14,16 +14,21 @@ class PredatorBody(pyglet.shapes.Circle):
         self.water_lvl = 0
         self.food_lvl = 59
         self.child_segment = None
+
+        self.simulated_x = x
+        self.simulated_y = y
         
     
     def update_look_direction(self):
         self.look_direction += random.random() * (self.twitch_range - -self.twitch_range) + -self.twitch_range
-        self.velocity_x = 0 - math.cos(self.look_direction)*25
-        self.velocity_y = 0 - math.sin(self.look_direction)*25
+        self.velocity_x = 0 - math.cos(self.look_direction) * 25
+        self.velocity_y = 0 - math.sin(self.look_direction) * 25
 
     def update(self, dt):
         self.x += self.velocity_x * dt
         self.y += self.velocity_y * dt
+        self.simulated_x += self.velocity_x * dt
+        self.simulated_y += self.velocity_y * dt
         self.update_look_direction()
 
         if self.food_lvl > 5:
@@ -33,8 +38,8 @@ class PredatorBody(pyglet.shapes.Circle):
         if self.child_segment is not None:
             self.child_segment.update(
                 dt=dt, 
-                parent_x=self.x, 
-                parent_y=self.y,
+                parent_x=self.simulated_x, 
+                parent_y=self.simulated_y,
                 parent_radius=self.radius
             )
 
