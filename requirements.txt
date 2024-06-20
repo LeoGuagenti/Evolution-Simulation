@@ -1,0 +1,3 @@
+numpy==2.0.0
+pyglet==2.0.15
+shapely==2.0.4

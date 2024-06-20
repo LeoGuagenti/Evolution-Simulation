@@ -1,0 +1,31 @@
+import random, time
+
+SEED = random.seed(time.time())
+
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
+
+# Creatures
+PREY_COUNT = 20
+PREY_RAD = 3
+
+# Water Element Constants - Environment
+WATER_ELEMENTS = 7
+WATER_ELEMENT_MAX_RAD = 32
+WATER_ELEMENT_MIN_RAD = 12
+WATER_ELEMENT_CLUSTER_SIZE = 25
+WATER_ELEMENT_COLOR = (0, 0, 255, 255)
+
+# Vegetation Constants - Environment
+VEGETATION = 25
+VEGETATION_RAD = 5
+VEGETATION_CLUSTER_SIZE = 40
+GENERIC_FOOD_VALUE = 0.1
+MAX_RANGE = 40
+MIN_RANGE = 5
+
+# Land Constants - Environment
+LAND_ELEMENTS = 0
+
+
+
