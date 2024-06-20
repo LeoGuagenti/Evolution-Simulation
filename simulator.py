@@ -51,8 +51,7 @@ class Simulator:
                     random.randrange(7, 9),     # food repro cost   
                     random.randrange(5, 10),    # water repro threshold
                     random.randrange(1, 4),     # water repro cost
-                    # random.uniform(0.015, 0.045), # food loss rate
-                    0,
+                    random.uniform(0.001, 0.005), # food loss rate
                     random.random() / 20,       # WATER loss rate
                     random.randrange(20, 40),          # speed
                     random.randrange(PREY_RAD+1, 20),   # view distance

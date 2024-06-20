@@ -1,4 +1,7 @@
-import math
+import math, random
+
+class Object(object):
+    pass
 
 # [(0, 0, 0), (1, 0, 0), (2, 3, 0), ...] ==> [(0, 0), (1, 0), (2, 3), ...]
 def remove_z_from_tuples(tuple_list: list):
@@ -37,5 +40,5 @@ def circles_touch(x1, y1, x2, y2, r1, r2):
     if(d <= r1 - r2) or (d <= r2 - r1) or (d < r1 + r2) or (d == r1 + r2):  return True
     else:                                                                   return False
 
-class Object(object):
-    pass
+def generate_point(mean_x, mean_y, deviation_x, deviation_y):
+    return random.gauss(mean_x, deviation_x), random.gauss(mean_y, deviation_y)

@@ -1,8 +1,8 @@
 import pyglet, random
 
 class Vegetation(pyglet.shapes.Circle):
-    def __init__(self, x, y, radius, food_value=None, color=..., batch=[], group=None):
-        super().__init__(x, y, radius, color, batch, group)
+    def __init__(self, x, y, radius, food_value=None, segments=None, color=..., batch=None, group=None):
+        super().__init__(x, y, radius, segments, color, batch, group)
         self.reserve_batch = batch
         self.alive = True 
         self.regen_chance = 1
