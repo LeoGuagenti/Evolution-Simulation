@@ -11,29 +11,32 @@ class PredatorSegment(pyglet.shapes.Circle):
         self.velocity_x = velocity_x
         self.velocity_y = velocity_y
         self.look_direction = look_direction
-        self.child_segment = None        
+        self.child_segment = None     
+        self.simulated_x = x
+        self.simulated_y = y   
 
     def update(self, dt, parent_x, parent_y, parent_radius):
-        if not circles_touch(parent_x, parent_y, self.x, self.y, parent_radius, self.radius):
-            dy = self.y - parent_y
-            dx = self.x - parent_x
+        if not circles_touch(parent_x, parent_y, self.simulated_x, self.simulated_y, parent_radius, self.radius):
+            dy = self.simulated_y - parent_y
+            dx = self.simulated_x - parent_x
             self.look_direction = math.atan2(dy, dx)
 
-            self.velocity_x = 0 - math.cos(self.look_direction)*25
-            self.velocity_y = 0 - math.sin(self.look_direction)*25
+            self.velocity_x = 0 - math.cos(self.look_direction) * 25
+            self.velocity_y = 0 - math.sin(self.look_direction) * 25
 
             self.x += self.velocity_x * dt
             self.y += self.velocity_y * dt
+            self.simulated_x += self.velocity_x * dt
+            self.simulated_y += self.velocity_y * dt
 
         if self.child_segment is not None:
            self.child_segment.update(
                 dt=dt, 
-                parent_x=self.x, 
-                parent_y=self.y,
+                parent_x=self.simulated_x, 
+                parent_y=self.simulated_y,
                 parent_radius=self.radius
             )
            
-        # TODO use simulated coords and switch between depending on var updated here
         if self.x > SCREEN_WIDTH:
             self.x = 0
         elif self.x <= 0:
