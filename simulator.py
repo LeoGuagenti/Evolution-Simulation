@@ -47,25 +47,25 @@ class Simulator:
                     randx,                      # start position x
                     randy,                      # start position y
                     PREY_RAD,                   # size
-                    random.randrange(8, 12),    # food repro threshold
-                    random.randrange(7, 9),     # food repro cost   
+                    random.uniform(3, 5),    # food repro threshold
+                    random.uniform(1, 5),     # food repro cost   
                     random.randrange(5, 10),    # water repro threshold
                     random.randrange(1, 4),     # water repro cost
-                    random.uniform(0.001, 0.005), # food loss rate
+                    random.uniform(0.001, 0.009), # food loss rate
                     random.random() / 20,       # WATER loss rate
                     random.randrange(20, 40),          # speed
                     random.randrange(PREY_RAD+1, 20),   # view distance
                     random.uniform(0.0, 0.3),
-                    color=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)),                # color    
+                    color=(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)), 
                     batch=self.prey_batch               # render batch
                 )) 
 
     def update_prey(self, dt):
         new_prey = []
         for i, prey in enumerate(self.prey):
-            if prey.food_lvl <= 0:               
+            if prey.food_lvl <= 0:         
+                # print(f'prey died of starvation at {(prey.x, prey.y)}')      
                 # self.env.add_veg(prey.x, prey.y)
-                
                 del self.prey[i]
             
             # prey vs water
@@ -82,13 +82,13 @@ class Simulator:
             distances = {}
             for veg in self.env.vegetation_objects:
                 # prey vs vegetation
-                if circles_touch(prey.x, prey.y, veg.x, veg.y, prey.radius, VEGETATION_RAD):
+                if circles_touch(prey.x, prey.y, veg.x, veg.y, prey.radius, VEGETATION_RAD) and veg.alive is True:
                     prey.eat(GENERIC_FOOD_VALUE)
                     veg.unalive()
 
-                # prey vs visible vegetation
-                if circles_touch(prey.x, prey.y, veg.x, veg.y, prey.view_distance, VEGETATION_RAD):
-                    distances[math.dist((prey.x, prey.y), (veg.x, veg.y))] = i
+                # # prey vs visible vegetation
+                # if circles_touch(prey.x, prey.y, veg.x, veg.y, prey.view_distance, VEGETATION_RAD):
+                #     distances[math.dist((prey.x, prey.y), (veg.x, veg.y))] = i
 
             # if len(distances) > 0:
             #     prey.food_in_range = False
@@ -130,11 +130,11 @@ class Simulator:
                     x                           = prey.x + math.cos(rand_angle) * prey.radius,
                     y                           = prey.y + math.sin(rand_angle) * prey.radius,
                     radius                      = PREY_RAD,
-                    food_repro_threshold        = abs(random.uniform(max(prey.food_repro_threshold - 0.5, 7), prey.food_repro_threshold + 0.1)),
+                    food_repro_threshold        = max(1, random.uniform(prey.food_repro_threshold - 0.1, prey.food_repro_threshold + 0.1)),
                     food_repro_cost             = abs(random.uniform(max(prey.food_repro_cost - 0.1, 5), prey.food_repro_cost + 0.2)), 
                     water_repro_threshhold      = random.randrange(5, 10),  
                     water_repro_cost            = random.randrange(4, 7),  
-                    food_loss_rate              = random.uniform(max(prey.food_loss_rate - (0.4 / 20), 0.015), prey.food_loss_rate + (0.1/ 20)),  
+                    food_loss_rate              = max(0, random.uniform(max(prey.food_loss_rate - (0.4 / 20), 0.015), prey.food_loss_rate + (0.1/ 20))),  
                     water_loss_rate             = random.random(), 
                     speed                       = abs(random.randrange(prey.speed-5, prey.speed+5)),
                     view_distance               = abs(random.randrange(prey.view_distance-1, prey.view_distance+1)),

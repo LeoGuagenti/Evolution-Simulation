@@ -2,8 +2,10 @@ import random, time
 
 SEED = random.seed(time.time())
 
+# Rendering
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
+DRAW_VIEW_INDICATOR = False
 
 # Creatures
 PREY_COUNT = 20
@@ -21,12 +23,14 @@ VEGETATION_NUM = 25
 VEGETATION_RAD = 5
 VEGETATION_CLUSTER_SIZE = 50
 VEGETATION_CLUSTER_DEVIATION = 30
-GENERIC_FOOD_VALUE = 0.1
+GENERIC_FOOD_VALUE = 0.5
 MAX_RANGE = 40
 MIN_RANGE = 5
 
 # Land Constants - Environment
 LAND_ELEMENTS = 0
+
+
 
 
 

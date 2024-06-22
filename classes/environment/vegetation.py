@@ -19,6 +19,7 @@ class Vegetation(pyglet.shapes.Circle):
             self.batch = self.reserve_batch
 
     def update(self):
-        self.try_regen()
+        if self.regen_chance > 0:
+            self.try_regen()
 
-# diff type of veg that has higher food value and bright color (berries)
+# TODO diff type of veg that has higher food value and bright color (berries)

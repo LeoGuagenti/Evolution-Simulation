@@ -16,6 +16,7 @@ class Prey(pyglet.shapes.Circle):
         self.water_loss_rate = water_loss_rate
         self.speed = speed
         self.view_distance = view_distance
+        self.base_radius = radius
 
         # movement
         self.look_direction = random.randrange(0, 360)
@@ -23,12 +24,13 @@ class Prey(pyglet.shapes.Circle):
         self.velocity_y = 0 - math.sin(self.look_direction) * self.speed
         self.twitch_range = 0.2
         self.look_indicator = pyglet.shapes.Line(self.x, self.y, self.x + (self.velocity_x/2), self.y + (self.velocity_y/2), 1, color=(0,0,0,255), batch=self.batch)
-        self.view_indicator = pyglet.shapes.Circle(self.x, self.y, self.view_distance, color=(255, 255, 255, 55), batch=self.batch)
-
+        
         # internal variables
         self.food_lvl = 2
         self.water_lvl = 2
         self.food_in_range = False
+
+        if DRAW_VIEW_INDICATOR: self.view_indicator = pyglet.shapes.Circle(self.x, self.y, self.view_distance, color=(255, 255, 255, 55), batch=self.batch)  
 
     def eat(self, value):
         self.food_lvl += value
@@ -47,16 +49,13 @@ class Prey(pyglet.shapes.Circle):
         self.x += self.velocity_x * dt
         self.y += self.velocity_y * dt
 
-        if self.x > SCREEN_WIDTH:
-            self.x = 0
-        elif self.x <= 0:
-            self.x = SCREEN_WIDTH
+        if self.x > SCREEN_WIDTH:   self.x = 0
+        elif self.x <= 0:           self.x = SCREEN_WIDTH
         
-        if self.y > SCREEN_HEIGHT:
-            self.y = 0
-        elif self.y <= 0:
-            self.y = SCREEN_HEIGHT
+        if self.y > SCREEN_HEIGHT:  self.y = 0
+        elif self.y <= 0:           self.y = SCREEN_HEIGHT
 
         self.look_indicator = pyglet.shapes.Line(self.x, self.y, self.x + (self.velocity_x), self.y + (self.velocity_y), 1, color=(0,0,0,255), batch=self.batch)
-        self.view_indicator = pyglet.shapes.Circle(self.x, self.y, self.view_distance, color=(255, 255, 255, 55), batch=self.batch)
+        if DRAW_VIEW_INDICATOR: self.view_indicator = pyglet.shapes.Circle(self.x, self.y, self.view_distance, color=(255, 255, 255, 55), batch=self.batch)
         self.food_lvl -= self.food_loss_rate
+        self.radius = self.base_radius + (self.food_lvl/2)

@@ -47,8 +47,8 @@ class Environment:
         
         cluster_mean_x = 0
         cluster_mean_y = 0
-        cluster_deviation_x = SCREEN_WIDTH - 100
-        cluster_deviation_y = SCREEN_HEIGHT - 100
+        cluster_deviation_x = SCREEN_WIDTH - 300
+        cluster_deviation_y = SCREEN_HEIGHT - 300
 
         cluster_centers = [
             generate_point(cluster_mean_x, cluster_mean_y, cluster_deviation_x, cluster_deviation_y) 
@@ -69,6 +69,15 @@ class Environment:
                 color=(34, 139, 34, 255), 
                 batch=self.batch
             )) 
+
+    def add_veg(self, x, y):
+        self.vegetation_objects.append(Vegetation(
+            x, y, 
+            VEGETATION_RAD, 
+            GENERIC_FOOD_VALUE, 
+            color=(34, 139, 34, 255), 
+            batch=self.batch
+        ))
 
     def update(self):
         for veg in self.vegetation_objects:
